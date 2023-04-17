@@ -21,6 +21,10 @@ namespace Crud.WebApi.Controllers
             this.theWebApiDbContext = aWebApiDbContext;
         }
 
+        /// <summary>
+        /// Gets all the employees from the database.
+        /// </summary>
+        /// <returns>Employees in JSON format.</returns>
         [HttpGet]
         public async Task<IActionResult> GetAllEmployees()
         {
@@ -28,6 +32,10 @@ namespace Crud.WebApi.Controllers
             return Ok(employees);
         }
 
+        /// <summary>
+        /// Gets an employee from the database based on the Guid provided.
+        /// </summary>
+        /// <returns>Employee in JSON format.</returns>
         [HttpGet]
         [Route("{theId}")]
         public async Task<IActionResult> GetEmployee([FromRoute] Guid theId)
