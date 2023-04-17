@@ -1,0 +1,40 @@
+<div class="container mb-5">
+    <h1 class="mb-3">Add a new Employee</h1>
+    <div class="row col-5 form-group">
+        <form [formGroup]="registerFormGroup" (ngSubmit)="createEmployee()">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <label for="name" class="form-label text-danger m-lg-2">*</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Enter a name"
+                    formControlName="name" [ngClass]="{'is-invalid':submitted && name?.invalid}">
+                <span style="color:red ;font-size: 0.8rem" *ngIf="submitted && name?.invalid">Please enter a
+                    name.</span>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <label for="email" class="form-label text-danger m-lg-2">*</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Enter an email"
+                    formControlName="email" [ngClass]="{'is-invalid':submitted && email?.invalid}">
+                <span style="color:red ;font-size: 0.8rem" *ngIf="submitted && email?.invalid">Please enter a valid
+                    email address.</span>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone</label>
+                <label for="phone" class="form-label text-danger m-lg-2">*</label>
+                <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter phone"
+                    formControlName="phone" [ngClass]="{'is-invalid':submitted && phone?.invalid}">
+                <span style="color:red ;font-size: 0.8rem" *ngIf="submitted && phone?.invalid">Please enter a valid
+                    phone number.</span>
+            </div>
+            <div class="mb-3">
+                <label for="dateOfBirth" class="form-label">Date Of Birth</label>
+                <label for="dateOfBirth" class="form-label text-danger m-lg-2">*</label>
+                <input type="date" class="form-control" id="dateOfBirth" formControlName="dateOfBirth"
+                    [ngClass]="{'is-invalid':submitted && dateOfBirth?.invalid}">
+                <span style="color:red ;font-size: 0.8rem" *ngIf="submitted && dateOfBirth?.invalid">Please enter a date
+                    of birth.</span>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
