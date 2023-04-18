@@ -24,6 +24,6 @@ jobs:
       run: dotnet restore
       working-directory: Backend/WebApi_Angular_Crud/Crud.WebApi
     - name: Build
-      run: dotnet build Crud.WebApi.csproj --no-restore
+      run: dotnet build Backend/WebApi_Angular_Crud/Crud.WebApi/Crud.WebApi.csproj --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
