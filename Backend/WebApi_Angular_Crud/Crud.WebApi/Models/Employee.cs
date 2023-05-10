@@ -10,7 +10,7 @@ namespace Crud.WebApi.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public long Phone { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; } // Try using DateOnly
     }
 
     public  class DateTimeConverter : System.Text.Json.Serialization.JsonConverter<DateTime>
