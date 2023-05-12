@@ -23,6 +23,7 @@ builder.Services.AddSession(o => {
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Register the db context.
 builder.Services.AddDbContext<WebApiDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiConnectionString")));
 

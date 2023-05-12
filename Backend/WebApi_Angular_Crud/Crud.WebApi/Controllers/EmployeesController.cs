@@ -6,19 +6,22 @@ using System.Text.RegularExpressions;
 
 namespace Crud.WebApi.Controllers
 {
+    /// <summary>
+    /// API contoller for manupulating employee objects.
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class EmployeesController : Controller
     {
-        private readonly WebApiDbContext theWebApiDbContext;
+        private readonly WebApiDbContext myWebApiDbContext;
 
         /// <summary>
-        /// The controller is created and disposed on each request.
+        /// The controller is created and disposed on each HTTP request.
         /// </summary>
-        /// <param name="aWebApiDbContext"></param>
-        public EmployeesController(WebApiDbContext aWebApiDbContext)
+        /// <param name="theWebApiDbContext">The database context will be injected by the framework.</param>
+        public EmployeesController(WebApiDbContext theWebApiDbContext)
         {
-            this.theWebApiDbContext = aWebApiDbContext;
+            this.myWebApiDbContext = theWebApiDbContext;
         }
 
         /// <summary>
@@ -28,8 +31,8 @@ namespace Crud.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllEmployees()
         {
-            var employees = await this.theWebApiDbContext.Employees.ToListAsync();
-            return Ok(employees);
+            var anEmployees = await this.myWebApiDbContext.Employees.ToListAsync();
+            return Ok(anEmployees);
         }
 
         /// <summary>
@@ -40,8 +43,9 @@ namespace Crud.WebApi.Controllers
         [Route("{theId}")]
         public async Task<IActionResult> GetEmployee([FromRoute] Guid theId)
         {
-            var anExistingEmployee = await this.theWebApiDbContext.Employees.FirstOrDefaultAsync(employee =>
+            var anExistingEmployee = await this.myWebApiDbContext.Employees.FirstOrDefaultAsync(employee =>
                 employee.Id == theId);
+            
             if (anExistingEmployee == null)
             {
                 return NotFound("Employee Not Found !!");
@@ -50,68 +54,86 @@ namespace Crud.WebApi.Controllers
             return Ok(anExistingEmployee);
         }
 
+        /// <summary>
+        /// Adds a new employee to the database on HTTPPost request.
+        /// </summary>
+        /// <param name="theEmployee">The employee object coming from the request body.</param>
+        /// <returns>The newly created employee.</returns>
         [HttpPost]
         public async Task<IActionResult> AddEmployee([FromBody] Employee theEmployee)
         {
             // Check for validations here.
-            Regex emailRegex = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
+            Regex anEmailRegex = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
                 RegexOptions.CultureInvariant | RegexOptions.Singleline);
 
-            Regex phoneRegex = new Regex(@"^[0-9]{10}$");
+            Regex aPhoneRegex = new Regex(@"^[0-9]{10}$");
 
-            bool isValidDate = DateTime.TryParse(theEmployee.DateOfBirth.ToString(), out DateTime temp);
+            bool aIsValidDate = DateTime.TryParse(theEmployee.DateOfBirth.ToString(), out DateTime temp);
 
             if (theEmployee.Name.Length <= 0 ||
-                !emailRegex.IsMatch(theEmployee.Email) ||
-                !phoneRegex.IsMatch(theEmployee.Phone.ToString()) ||
-                !isValidDate)
+                !anEmailRegex.IsMatch(theEmployee.Email) ||
+                !aPhoneRegex.IsMatch(theEmployee.Phone.ToString()) ||
+                !aIsValidDate)
             {
                 return BadRequest("Invalid data !!");
             }
 
             theEmployee.Id = Guid.NewGuid();
-            await this.theWebApiDbContext.Employees.AddAsync(theEmployee);
-            await this.theWebApiDbContext.SaveChangesAsync();
+            await this.myWebApiDbContext.Employees.AddAsync(theEmployee);
+            await this.myWebApiDbContext.SaveChangesAsync();
 
             return Ok(theEmployee);
         }
 
+        /// <summary>
+        /// Updates the employee on HTTPPut request.
+        /// </summary>
+        /// <param name="theId">The GUID of the employee to be updated from the URL route.</param>
+        /// <param name="theEmployee">The employee object from the request body.</param>
+        /// <returns>The updated employee object.</returns>
         [HttpPut]
         [Route("{theId}")]
         public async Task<IActionResult> UpdateEmployee([FromRoute] Guid theId, [FromBody] Employee theEmployee)
         {
             theEmployee.Id = theId;
 
-            var existingEmployee = await this.theWebApiDbContext.Employees.FirstOrDefaultAsync(employee =>
+            var anExistingEmployee = await this.myWebApiDbContext.Employees.FirstOrDefaultAsync(employee =>
                 employee.Id == theId);
-            if (existingEmployee == null)
-            {
-                return NotFound("Employee Not Found !!");
-            }
 
-            existingEmployee.Name = theEmployee.Name;
-            existingEmployee.Email = theEmployee.Email;
-            existingEmployee.Phone = theEmployee.Phone;
-            existingEmployee.DateOfBirth = theEmployee.DateOfBirth;
-
-            await this.theWebApiDbContext.SaveChangesAsync();
-
-            return Ok(existingEmployee);
-        }
-
-        [HttpDelete]
-        [Route("{theId}")]
-        public async Task<IActionResult> DeleteEmployee([FromRoute] Guid theId)
-        {
-            var anExistingEmployee = await this.theWebApiDbContext.Employees.FirstOrDefaultAsync(employee =>
-                employee.Id == theId);
             if (anExistingEmployee == null)
             {
                 return NotFound("Employee Not Found !!");
             }
 
-            this.theWebApiDbContext.Remove(anExistingEmployee);
-            await this.theWebApiDbContext.SaveChangesAsync();
+            anExistingEmployee.Name = theEmployee.Name;
+            anExistingEmployee.Email = theEmployee.Email;
+            anExistingEmployee.Phone = theEmployee.Phone;
+            anExistingEmployee.DateOfBirth = theEmployee.DateOfBirth;
+
+            await this.myWebApiDbContext.SaveChangesAsync();
+
+            return Ok(anExistingEmployee);
+        }
+
+        /// <summary>
+        /// Deletes an employee from the database.
+        /// </summary>
+        /// <param name="theId">The GUID of the employee to be deleted.</param>
+        /// <returns>The deleted employee object.</returns>
+        [HttpDelete]
+        [Route("{theId}")]
+        public async Task<IActionResult> DeleteEmployee([FromRoute] Guid theId)
+        {
+            var anExistingEmployee = await this.myWebApiDbContext.Employees.FirstOrDefaultAsync(employee =>
+                employee.Id == theId);
+            
+            if (anExistingEmployee == null)
+            {
+                return NotFound("Employee Not Found !!");
+            }
+
+            this.myWebApiDbContext.Remove(anExistingEmployee);
+            await this.myWebApiDbContext.SaveChangesAsync();
 
             return Ok(anExistingEmployee);
         }
