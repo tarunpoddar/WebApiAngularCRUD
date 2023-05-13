@@ -27,6 +27,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<WebApiDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiConnectionString")));
 
+builder.Services.AddAutoMapper(typeof(Program));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
