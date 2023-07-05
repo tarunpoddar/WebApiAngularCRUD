@@ -19,10 +19,10 @@ export class AddEmployeeComponent implements OnInit {
   // Create an empty employee to be added.
   addEmployee: Employee = {
     id: '',
-    name: '',
-    email: '',
-    phone: '',
-    dateOfBirth: '',
+    employeeName: '',
+    employeeEmail: '',
+    employeePhone: '',
+    employeeDateOfBirth: '',
   };
   //#endregion
 
@@ -80,16 +80,16 @@ export class AddEmployeeComponent implements OnInit {
 
     this.addEmployee.id = '00000000-0000-0000-0000-000000000000';
 
-    this.addEmployee.name = this.registerFormGroup.controls['name'].value
+    this.addEmployee.employeeName = this.registerFormGroup.controls['name'].value
       ? this.registerFormGroup.controls['name'].value
       : '';
-    this.addEmployee.email = this.registerFormGroup.controls['email'].value
+    this.addEmployee.employeeEmail = this.registerFormGroup.controls['email'].value
       ? this.registerFormGroup.controls['email'].value
       : '';
-    this.addEmployee.phone = this.registerFormGroup.controls['phone'].value
+    this.addEmployee.employeePhone = this.registerFormGroup.controls['phone'].value
       ? this.registerFormGroup.controls['phone'].value
       : '';
-    this.addEmployee.dateOfBirth = this.registerFormGroup.controls[
+    this.addEmployee.employeeDateOfBirth = this.registerFormGroup.controls[
       'dateOfBirth'
     ].value
       ? this.registerFormGroup.controls['dateOfBirth'].value

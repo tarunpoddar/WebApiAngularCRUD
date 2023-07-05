@@ -43,7 +43,7 @@ export class EmployeesListComponent implements OnInit {
         const subscription = this.confirmBoxEvokeService
           .danger(
             'Are you sure?',
-            `Delete the employee: ${employee.name}`,
+            `Delete the employee: ${employee.employeeName}`,
             'Yes',
             'No'
           )
@@ -55,7 +55,7 @@ export class EmployeesListComponent implements OnInit {
                 next: (employee) => {
                   this.ngOnInit();
                   this.router.navigate(['employees']);
-                  console.log(`Deleted employee: ${employee.name} `);
+                  console.log(`Deleted employee: ${employee.employeeName} `);
                 },
                 error: (response) => {
                   console.log(response);

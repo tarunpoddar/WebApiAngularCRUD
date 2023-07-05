@@ -1,7 +1,7 @@
 export interface Employee{
 id: string
-name:string
-email:string
-phone:string
-dateOfBirth:string
+employeeName:string
+employeeEmail:string
+employeePhone:string
+employeeDateOfBirth:string
 }

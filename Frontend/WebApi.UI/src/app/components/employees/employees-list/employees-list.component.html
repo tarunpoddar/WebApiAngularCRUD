@@ -21,10 +21,10 @@
         <tbody>
             <tr *ngFor="let employee of employees">
                 <td>{{employee.id}}</td>
-                <td>{{employee.name}}</td>
-                <td>{{employee.email}}</td>
-                <td>{{employee.phone}}</td>
-                <td>{{employee.dateOfBirth}}</td>
+                <td>{{employee.employeeName}}</td>
+                <td>{{employee.employeeEmail}}</td>
+                <td>{{employee.employeePhone}}</td>
+                <td>{{employee.employeeDateOfBirth}}</td>
                 <td><button class="btn btn-primary" [routerLink]="['/employees','update',employee.id]">View</button></td>
                 <td><button class="btn btn-primary btn-danger" (click)="deleteEmployee(employee.id)">Delete</button></td>
             </tr>

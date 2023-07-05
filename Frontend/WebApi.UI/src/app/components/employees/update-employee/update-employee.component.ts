@@ -17,10 +17,10 @@ export class UpdateEmployeeComponent implements OnInit {
   // Declare an empty employee to be updated.
   anExistingEmployee: Employee = {
     id: '',
-    name: '',
-    email: '',
-    phone: '',
-    dateOfBirth: '',
+    employeeName: '',
+    employeeEmail: '',
+    employeePhone: '',
+    employeeDateOfBirth: '',
   };
 
   // Declare a new form group for the validation.
@@ -64,21 +64,21 @@ export class UpdateEmployeeComponent implements OnInit {
 
               // Set the values to the form controls.
               this.updateFormGroup.get('id')?.setValue(employee.id);
-              this.updateFormGroup.get('name')?.setValue(employee.name);
-              this.updateFormGroup.get('email')?.setValue(employee.email);
-              this.updateFormGroup.get('phone')?.setValue(employee.phone);
+              this.updateFormGroup.get('name')?.setValue(employee.employeeName);
+              this.updateFormGroup.get('email')?.setValue(employee.employeeEmail);
+              this.updateFormGroup.get('phone')?.setValue(employee.employeePhone);
 
               // Transform the date format.
               var datePipe = new DatePipe('en-US');
               var formatedyear = datePipe.transform(
-                employee.dateOfBirth,
+                employee.employeeDateOfBirth,
                 'yyyy-MM-dd'
               );
 
               if (formatedyear) {
                 this.updateFormGroup
                   .get('dateOfBirth')
-                  ?.setValue(employee.dateOfBirth);
+                  ?.setValue(employee.employeeDateOfBirth);
               }
             },
             error: (response) => {
@@ -126,16 +126,16 @@ export class UpdateEmployeeComponent implements OnInit {
       return;
     }
 
-    this.anExistingEmployee.name = this.updateFormGroup.controls['name'].value
+    this.anExistingEmployee.employeeName = this.updateFormGroup.controls['name'].value
       ? this.updateFormGroup.controls['name'].value
       : '';
-    this.anExistingEmployee.email = this.updateFormGroup.controls['email'].value
+    this.anExistingEmployee.employeeEmail = this.updateFormGroup.controls['email'].value
       ? this.updateFormGroup.controls['email'].value
       : '';
-    this.anExistingEmployee.phone = this.updateFormGroup.controls['phone'].value
+    this.anExistingEmployee.employeePhone = this.updateFormGroup.controls['phone'].value
       ? this.updateFormGroup.controls['phone'].value
       : '';
-    this.anExistingEmployee.dateOfBirth = this.updateFormGroup.controls[
+    this.anExistingEmployee.employeeDateOfBirth = this.updateFormGroup.controls[
       'dateOfBirth'
     ].value
       ? this.updateFormGroup.controls['dateOfBirth'].value
