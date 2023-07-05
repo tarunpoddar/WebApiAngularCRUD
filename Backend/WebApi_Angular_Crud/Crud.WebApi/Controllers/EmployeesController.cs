@@ -165,7 +165,8 @@ namespace Crud.WebApi.Controllers
 
             bool aIsValidDate = DateTime.TryParse(theEmployee.EmployeeDateOfBirth.ToString(), out DateTime temp);
 
-            if (theEmployee.EmployeeName.Length <= 0 ||
+            if (string.IsNullOrEmpty(theEmployee.EmployeeName) ||
+                 string.IsNullOrEmpty(theEmployee.EmployeeEmail) ||
                 !anEmailRegex.IsMatch(theEmployee.EmployeeEmail) ||
                 !aPhoneRegex.IsMatch(theEmployee.EmployeePhone.ToString()) ||
                 !aIsValidDate)
