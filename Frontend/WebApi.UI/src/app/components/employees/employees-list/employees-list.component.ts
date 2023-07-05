@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  ConfirmBoxEvokeService
-} from '@costlydeveloper/ngx-awesome-popup';
+import { ConfirmBoxEvokeService } from '@costlydeveloper/ngx-awesome-popup';
 import { Employee } from 'src/app/models/employee.model';
 import { EmployeesService } from 'src/app/services/employees.service';
 import { timer } from 'rxjs';
@@ -13,11 +11,10 @@ import { timer } from 'rxjs';
   styleUrls: ['./employees-list.component.css'],
 })
 
-
 // Class EmployeesListComponent which handles logic of showing list of all employees.
 export class EmployeesListComponent implements OnInit {
   employees: Employee[] = [];
-  status:string = "Unknown";
+  status: string = 'Unknown';
   constructor(
     private employeeService: EmployeesService,
     private router: Router,
@@ -28,16 +25,22 @@ export class EmployeesListComponent implements OnInit {
   ngOnInit(): void {
     const source = timer(1000, 5000);
     let name = document.getElementById('status') as HTMLElement;
-    
-    const subscribe = source.subscribe(val =>{
+    let flag = false;
+    const subscribe = source.subscribe((val) => {
       this.employeeService.getAllEmployees().subscribe({
         next: (employees) => {
-          this.status = "Online";
-          name?.style.setProperty('background-color', 'green')
+          this.status = 'Online';
+          if (!flag) {
+            this.employees = employees;
+          }
+          flag = true;
+          name?.style.setProperty('background-color', 'green');
         },
         error: (response) => {
-          this.status = "Offline";
-          name?.style.setProperty('background-color', 'grey')
+          this.status = 'Offline';
+          flag = false;
+          this.employees = [];
+          name?.style.setProperty('background-color', 'grey');
         },
       });
     });
@@ -56,7 +59,6 @@ export class EmployeesListComponent implements OnInit {
   deleteEmployee(id: string) {
     this.employeeService.getEmployee(id).subscribe({
       next: (employee) => {
-
         // Show a confirmation dialog to user.
         const subscription = this.confirmBoxEvokeService
           .danger(
@@ -66,7 +68,6 @@ export class EmployeesListComponent implements OnInit {
             'No'
           )
           .subscribe((dialogResult) => {
-
             if (dialogResult.success) {
               // Call the delete employee API.
               this.employeeService.deleteEmployee(id).subscribe({
@@ -79,7 +80,6 @@ export class EmployeesListComponent implements OnInit {
                   console.log(response);
                 },
               });
-              
             }
           });
       },
