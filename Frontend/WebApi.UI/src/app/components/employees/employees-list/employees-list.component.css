@@ -1,3 +1,13 @@
 a:hover {
     cursor:pointer;
    }
+.myDiv{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#status{
+    background-color: grey;
+    color: white;
+}

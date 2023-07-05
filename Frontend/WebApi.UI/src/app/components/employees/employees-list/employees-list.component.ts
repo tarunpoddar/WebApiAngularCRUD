@@ -5,6 +5,7 @@ import {
 } from '@costlydeveloper/ngx-awesome-popup';
 import { Employee } from 'src/app/models/employee.model';
 import { EmployeesService } from 'src/app/services/employees.service';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-employees-list',
@@ -16,6 +17,7 @@ import { EmployeesService } from 'src/app/services/employees.service';
 // Class EmployeesListComponent which handles logic of showing list of all employees.
 export class EmployeesListComponent implements OnInit {
   employees: Employee[] = [];
+  status:string = "Unknown";
   constructor(
     private employeeService: EmployeesService,
     private router: Router,
@@ -24,6 +26,22 @@ export class EmployeesListComponent implements OnInit {
 
   // Calls when the component inits for first time.
   ngOnInit(): void {
+    const source = timer(1000, 5000);
+    let name = document.getElementById('status') as HTMLElement;
+    
+    const subscribe = source.subscribe(val =>{
+      this.employeeService.getAllEmployees().subscribe({
+        next: (employees) => {
+          this.status = "Online";
+          name?.style.setProperty('background-color', 'green')
+        },
+        error: (response) => {
+          this.status = "Offline";
+          name?.style.setProperty('background-color', 'grey')
+        },
+      });
+    });
+
     this.employeeService.getAllEmployees().subscribe({
       next: (employees) => {
         this.employees = employees;

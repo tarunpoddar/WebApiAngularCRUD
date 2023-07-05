@@ -1,9 +1,11 @@
     <div class="container my-3" >
-        <div>
+        <div class = "myDiv">
             <h1 class="mb-3">All Employees 
                 <button class="btn btn-primary" routerLink="/employees/add">+ Add</button>
             </h1>
-            
+            <div id="status">
+                {{status}}
+            </div>
         </div>
     <h2 *ngIf="employees.length<=0">No Employees found!!</h2>
     <table class="table" *ngIf="employees.length > 0">
