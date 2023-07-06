@@ -1,2 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import "node_modules/@costlydeveloper/ngx-awesome-popup/styles/theme";
+
+footer>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #03444e;
+    color: white;
+    height: 200px;
+}

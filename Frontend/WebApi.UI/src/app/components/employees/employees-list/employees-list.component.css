@@ -1,12 +1,26 @@
 a:hover {
     cursor:pointer;
    }
+.main-div{
+height: 400px;
+}
 .myDiv{
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-
+.msg-div{
+    display:grid;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 50px
+}
+h2{
+    text-align: center;
+}
+.table-height{
+    height: 200px;
+}
 #status{
     background-color: grey;
     color: white;
