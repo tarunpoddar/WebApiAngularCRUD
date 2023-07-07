@@ -2,7 +2,7 @@ a:hover {
   cursor: pointer;
 }
 .main-div {
-  height: 400px;
+  min-height: 400px;
 }
 .myDiv {
   display: flex;

@@ -16,6 +16,10 @@ export class AddEmployeeComponent implements OnInit {
 
   submitted = false;
 
+  genders: any = [];
+
+  departments: any = [];
+
   // Create an empty employee to be added.
   addEmployee: Employee = {
     id: '',
@@ -30,7 +34,10 @@ export class AddEmployeeComponent implements OnInit {
   constructor(
     private employeeService: EmployeesService,
     private router: Router
-  ) {}
+  ) {
+    this.genders = ['Male', 'Female', 'Others'];
+    this.departments = ['IT', 'Legal', 'HR'];
+  }
   //#endregion
 
   //#region Methods
@@ -47,6 +54,8 @@ export class AddEmployeeComponent implements OnInit {
       Validators.minLength(10),
       Validators.maxLength(10),
     ]),
+    genderOptions: new FormControl('', [Validators.required]),
+    department: new FormControl('', [Validators.required]),
     dateOfBirth: new FormControl('', [Validators.required]),
   });
 
@@ -65,6 +74,23 @@ export class AddEmployeeComponent implements OnInit {
     return this.registerFormGroup.get('phone');
   }
 
+  // Gets the value of control with name 'gender'.
+  get genderOptions() {
+    return this.registerFormGroup.get('genderOptions');
+  }
+
+  // Gets the value of control with name 'department'.
+  get department() {
+    if (
+      this.registerFormGroup.controls['department'].value?.includes('Select')
+    ) {
+      this.registerFormGroup.controls['department'].setErrors({
+        incorrect: true,
+      });
+    }
+    return this.registerFormGroup.get('department');
+  }
+
   // Gets the value of control with name 'dateOfBirth'.
   get dateOfBirth() {
     return this.registerFormGroup.get('dateOfBirth');
@@ -80,13 +106,16 @@ export class AddEmployeeComponent implements OnInit {
 
     this.addEmployee.id = '00000000-0000-0000-0000-000000000000';
 
-    this.addEmployee.employeeName = this.registerFormGroup.controls['name'].value
+    this.addEmployee.employeeName = this.registerFormGroup.controls['name']
+      .value
       ? this.registerFormGroup.controls['name'].value
       : '';
-    this.addEmployee.employeeEmail = this.registerFormGroup.controls['email'].value
+    this.addEmployee.employeeEmail = this.registerFormGroup.controls['email']
+      .value
       ? this.registerFormGroup.controls['email'].value
       : '';
-    this.addEmployee.employeePhone = this.registerFormGroup.controls['phone'].value
+    this.addEmployee.employeePhone = this.registerFormGroup.controls['phone']
+      .value
       ? this.registerFormGroup.controls['phone'].value
       : '';
     this.addEmployee.employeeDateOfBirth = this.registerFormGroup.controls[
