@@ -1,19 +1,14 @@
 <div class="container my-3 main-div">
-  <div class="myDiv">
+  <div *ngIf="employees.length > 0" class="myDiv">
     <h1 class="mb-3">
       All Employees
       <button class="btn btn-primary" routerLink="/employees/add">+ Add</button>
     </h1>
-    <div id="status">
-      {{ status }}
-    </div>
   </div>
-  <div class="msg-div" *ngIf="employees.length <= 0">
+  <div class="msg-div" *ngIf="isMessageVisible">
     <h2>
-      Something is not right <br />
-      Please try again !!
+      {{ status }}
     </h2>
-    <img class="images" src="assets/disconnect.png" height="200" width="300" />
   </div>
   <table class="table table-height" *ngIf="employees.length > 0">
     <thead>

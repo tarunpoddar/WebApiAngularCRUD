@@ -14,7 +14,8 @@ import { timer } from 'rxjs';
 // Class EmployeesListComponent which handles logic of showing list of all employees.
 export class EmployeesListComponent implements OnInit {
   employees: Employee[] = [];
-  status: string = 'Unknown';
+  status: string = 'Loading...';
+  isMessageVisible: boolean = false;
   constructor(
     private employeeService: EmployeesService,
     private router: Router,
@@ -23,31 +24,15 @@ export class EmployeesListComponent implements OnInit {
 
   // Calls when the component inits for first time.
   ngOnInit(): void {
-    const source = timer(1000, 5000);
-    let name = document.getElementById('status') as HTMLElement;
-    let flag = false;
-    const subscribe = source.subscribe((val) => {
-      this.employeeService.getAllEmployees().subscribe({
-        next: (employees) => {
-          this.status = 'Online';
-          if (!flag) {
-            this.employees = employees;
-          }
-          flag = true;
-          name?.style.setProperty('background-color', 'green');
-        },
-        error: (response) => {
-          this.status = 'Offline';
-          flag = false;
-          this.employees = [];
-          name?.style.setProperty('background-color', 'grey');
-        },
-      });
-    });
-
+    this.isMessageVisible = true;
     this.employeeService.getAllEmployees().subscribe({
       next: (employees) => {
         this.employees = employees;
+        if (this.employees.length == 0) {
+          this.status = 'No records in database.';
+        } else {
+          this.isMessageVisible = false;
+        }
       },
       error: (response) => {
         console.log(response);
