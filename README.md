@@ -11,4 +11,6 @@
 * The fronend application is an Angular(v15) application written in HTML, CSS and TypeScript.
 * All types of validations are applied using ReactiveFormsModule validation.
 * It shows the usage of the pop-up while deleting an employee using NgxAwesomePopupModule.
+* Used rxjs for handling disconnect cases using timer and consume web api's using Observable.
+* Used Pipes to format data before preview.
 
