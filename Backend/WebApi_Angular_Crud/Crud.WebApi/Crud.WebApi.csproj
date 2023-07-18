@@ -24,4 +24,8 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Crud.Shared\Crud.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
